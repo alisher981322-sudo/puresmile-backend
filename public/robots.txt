@@ -1,0 +1,25 @@
+# ==============================================================================
+# PureDentist Luxury Dental Care - Production Crawler Rules
+# ==============================================================================
+
+User-agent: *
+Allow: /
+Allow: /public/
+Allow: /assets/
+
+# Disallow Internal API Routes
+Disallow: /api/
+Disallow: /api/*
+
+# Disallow Administrative Portals & Auth Endpoints
+Disallow: /#admin
+Disallow: /admin
+Disallow: /admin/*
+
+# Disallow Background Worker Directories & Session State
+Disallow: /.wwebjs_auth/
+Disallow: /.wwebjs_cache/
+
+# Host & Sitemap Declaration
+Host: https://puredentclinic.com
+Sitemap: https://puredentclinic.com/sitemap.xml

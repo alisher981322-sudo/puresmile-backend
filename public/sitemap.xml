@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+  <!-- Primary Home & 3D Interactive Showcase -->
+  <url>
+    <loc>https://puredentclinic.com/</loc>
+    <lastmod>2026-11-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Online Consultation & Appointment Booking -->
+  <url>
+    <loc>https://puredentclinic.com/#book</loc>
+    <lastmod>2026-11-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Dental Treatments & Cosmetic Procedures -->
+  <url>
+    <loc>https://puredentclinic.com/#services</loc>
+    <lastmod>2026-11-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- 3D Optical Scanner & Precision Diagnostic Tech -->
+  <url>
+    <loc>https://puredentclinic.com/#technology</loc>
+    <lastmod>2026-11-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Dental Specialists & Medical Faculty -->
+  <url>
+    <loc>https://puredentclinic.com/#doctors</loc>
+    <lastmod>2026-11-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Verified Patient Reviews & Testimonials -->
+  <url>
+    <loc>https://puredentclinic.com/#testimonials</loc>
+    <lastmod>2026-11-08</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Clinical FAQ & Patient Advisory -->
+  <url>
+    <loc>https://puredentclinic.com/#faq</loc>
+    <lastmod>2026-11-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <!-- Clinic Contact, Emergency Line & Location -->
+  <url>
+    <loc>https://puredentclinic.com/#contact</loc>
+    <lastmod>2026-11-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+</urlset>

@@ -1,0 +1,87 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-heading: 'Playfair Display', Georgia, serif;
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+    font-family: var(--font-sans);
+    background-color: #0A0D12;
+    color: #F8F9FA;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+}
+
+.font-serif-luxury {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+
+/* Custom glowing effects */
+.glow-gold {
+  box-shadow: 0 0 45px -8px rgba(212, 175, 55, 0.45);
+}
+
+.glow-cyan {
+  box-shadow: 0 0 35px -5px rgba(6, 182, 212, 0.55);
+}
+
+.glow-cyan-sm {
+  box-shadow: 0 0 15px 0px rgba(6, 182, 212, 0.4);
+}
+
+/* Glassmorphism */
+.glass-panel-luxury {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.glass-panel-dark {
+  background: rgba(15, 20, 28, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Medical calibrated grid background (Ultra-subtle luxury darkroom) */
+.cyber-grid {
+  background-size: 48px 48px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+}
+
+/* Radial luxury studio continuous spectrum */
+.radial-soft-studio {
+  background: radial-gradient(circle at 70% 45%, #E9E6E0 0%, #EFECE6 25%, #F4F2ED 50%, #F8F9FA 75%, #FAF9F7 100%);
+}
+
+.radial-dark-obsidian {
+  background: radial-gradient(circle at 50% 50%, #111722 0%, #0A0D12 70%, #06080B 100%);
+  position: relative;
+}
+
+.radial-dark-obsidian::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(234, 179, 8, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(6, 182, 212, 0.05) 0%, transparent 50%);
+  animation: spectrum-shift 15s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes spectrum-shift {
+  0% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.1); }
+  100% { opacity: 0.3; transform: scale(1); }
+}

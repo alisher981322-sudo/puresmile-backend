@@ -1,3 +1,4 @@
+import cors from 'cors';
 import express from 'express';
 import dotenv from 'dotenv';
 import appointmentsRouter from './routes/appointments.js';
@@ -16,6 +17,7 @@ import { globalErrorHandler, apiNotFoundHandler } from './middleware/errorHandle
 dotenv.config();
 
 const app = express();
+app.use(cors());
 const PORT = parseInt(process.env.PORT || '3000', 10);
 const HOST = '0.0.0.0';
 

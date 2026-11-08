@@ -10,3 +10,5 @@ coverage/
 .wwebjs_cache/
 # Local Netlify folder
 .netlify
+
+.vercel

@@ -129,7 +129,7 @@ export const WhatsAppQrModal: React.FC<WhatsAppQrModalProps> = ({ isOpen, onClos
     if (!confirm('Are you sure you want to disconnect?')) return;
     setActionLoading(true); setError(null);
     try {
-      const res = await fetch('/api/whatsapp/disconnect', { method: 'POST', headers: authHeaders() });
+      const res = await fetch((import.meta.env.VITE_API_URL || '') + '/api/whatsapp/disconnect', { method: 'POST', headers: authHeaders() });
       if (res.status === 401 || res.status === 403) { setError('Session expired.'); return; }
       const json = await res.json().catch(() => null);
       if (json?.success) {

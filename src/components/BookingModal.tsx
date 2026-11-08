@@ -39,12 +39,12 @@ export const BookingModal: React.FC<BookingModalProps> = ({
     if (isOpen) {
       setSelectedService(initialService);
       
-      fetch('/api/services')
+      fetch((import.meta.env.VITE_API_URL || '') + '/api/services')
         .then(res => res.json())
         .then(data => { if (data.success) setServices(data.data); })
         .catch(err => console.error('Failed to fetch services:', err));
 
-      fetch('/api/doctors')
+      fetch((import.meta.env.VITE_API_URL || '') + '/api/doctors')
         .then(res => res.json())
         .then(data => {
           if (data.success && data.data.length > 0) {
@@ -81,7 +81,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
       const fullPhone = `${code}${formattedNumber}`;
 
-      const response = await fetch('/api/appointments', {
+      const response = await fetch((import.meta.env.VITE_API_URL || '') + '/api/appointments', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -194,7 +194,7 @@ export const ServicesCarousel: React.FC<ServicesCarouselProps> = ({ onSelectServ
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/services')
+    fetch((import.meta.env.VITE_API_URL || '') + '/api/services')
       .then(res => res.json())
       .then(data => {
         if (data.success) {

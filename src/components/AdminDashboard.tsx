@@ -105,7 +105,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onOpenSecurityMo
         const headers: Record<string, string> = { 'Content-Type': 'application/json' };
         if (token) headers['Authorization'] = `Bearer ${token}`;
 
-        const res = await fetch('/api/whatsapp/status', { headers });
+        const res = await fetch((import.meta.env.VITE_API_URL || '') + '/api/whatsapp/status', { headers });
         const json = await res.json();
         if (json.success && json.data?.sessionStatus) {
           setWhatsAppStatus(json.data.sessionStatus);
@@ -512,7 +512,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onOpenSecurityMo
       const fullPhone = `${code}${formattedNumber}`;
       const payload = { ...checkinForm, patient_phone: fullPhone };
 
-      const response = await fetch('/api/admin/audit-logs/checkin', {
+      const response = await fetch((import.meta.env.VITE_API_URL || '') + '/api/admin/audit-logs/checkin', {
         method: 'POST',
         headers,
         body: JSON.stringify(payload)

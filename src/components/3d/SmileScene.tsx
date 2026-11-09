@@ -205,3 +205,4 @@ export const SmileScene: React.FC<SmileSceneProps> = ({ className = '' }) => {
     </div>
   );
 };
+

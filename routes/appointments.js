@@ -340,3 +340,4 @@ router.put('/appointments/:id', authenticateToken, requireAdmin, async (req, res
 });
 
 export default router;
+

@@ -151,3 +151,4 @@ router.delete('/doctors/:id', authenticateToken, requireAdmin, async (req: any, 
 });
 
 export default router;
+

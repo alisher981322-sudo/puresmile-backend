@@ -123,3 +123,4 @@ export function createAnatomicalToothGeometry(detail = 42): THREE.BufferGeometry
   geometry.computeVertexNormals();
   return geometry;
 }
+

@@ -179,3 +179,4 @@ export const Footer: React.FC<FooterProps> = ({ onOpenBooking, onOpenAdminModal 
     </footer>
   );
 };
+

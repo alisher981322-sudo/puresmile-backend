@@ -105,3 +105,4 @@ export const MolarScannerTooth: React.FC<MolarScannerToothProps> = ({ className 
     </div>
   );
 };
+

@@ -248,3 +248,4 @@ router.put('/inquiries/:id', async (req, res) => {
 });
 
 export default router;
+

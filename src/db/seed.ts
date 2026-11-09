@@ -33,3 +33,4 @@ export async function seedServices() {
     console.error('❌ [SEEDER] Failed to seed services:', err?.message || err);
   }
 }
+

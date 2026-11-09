@@ -283,3 +283,4 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenBooking, onOpenSearch, onO
     </nav>
   );
 };
+

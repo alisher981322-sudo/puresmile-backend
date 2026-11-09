@@ -188,3 +188,4 @@ export const HeroScene: React.FC<HeroSceneProps> = ({ className = '' }) => {
     </div>
   );
 };
+

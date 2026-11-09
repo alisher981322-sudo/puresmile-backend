@@ -211,3 +211,4 @@ export const ValuesSection: React.FC<ValuesSectionProps> = ({ onOpenBooking }) =
     </section>
   );
 };
+

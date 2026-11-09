@@ -160,3 +160,4 @@ app.listen(PORT, HOST, async () => {
     console.log('ℹ️ [WHATSAPP-WEB.JS] Background startup check completed');
   });
 });
+

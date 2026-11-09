@@ -293,3 +293,4 @@ router.put('/patients/:id', authenticateToken, requireAdmin, validatePatientUpda
 });
 
 export default router;
+

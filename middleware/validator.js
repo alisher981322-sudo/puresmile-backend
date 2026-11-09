@@ -215,3 +215,4 @@ export const validatePatientUpdate = (req, res, next) => {
   console.log('--------------------------------------------------');
   next();
 };
+

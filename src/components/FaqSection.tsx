@@ -240,3 +240,4 @@ export const FaqSection: React.FC<FaqSectionProps> = ({ onOpenBooking }) => {
     </section>
   );
 };
+

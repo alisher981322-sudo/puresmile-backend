@@ -39,8 +39,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Serve static files from the public directory
-app.use(express.static('public'));
 
+
+// Ensure API routes come before static catch-all
 // Mount API Routes
 app.use('/api', appointmentsRouter);
 app.use('/api', patientsRouter);
@@ -118,8 +119,9 @@ if (process.env.NODE_ENV !== 'production') {
   app.use(globalErrorHandler);
 } else {
   const path = await import('path');
-  app.use(express.static(path.resolve('./dist')));
-  app.use('*', (req, res) => {
+  
+
+// Ensure API routes come before static catch-all  app.use('*', (req, res) => {
     res.sendFile(path.resolve('./dist/index.html'));
   });
 }
@@ -160,4 +162,5 @@ app.listen(PORT, HOST, async () => {
     console.log('ℹ️ [WHATSAPP-WEB.JS] Background startup check completed');
   });
 });
+
 

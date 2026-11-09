@@ -16,7 +16,7 @@ import { globalErrorHandler, apiNotFoundHandler } from './middleware/errorHandle
 
 dotenv.config();
 
-const app = express();
+const app = express();$route
 $apiRoute
 app.use(cors({ origin: '*', methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], allowedHeaders: ['Content-Type', 'Authorization'] }));
 const PORT = parseInt(process.env.PORT || '3000', 10);
@@ -163,6 +163,7 @@ app.listen(PORT, HOST, async () => {
     console.log('ℹ️ [WHATSAPP-WEB.JS] Background startup check completed');
   });
 });
+
 
 
 

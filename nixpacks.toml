@@ -2,7 +2,7 @@
 pkgs = ["nodejs_22"] 
  
 [phases.install] 
-cmds = ["npm install --include=optional --legacy-peer-deps --force"] 
+cmds = ["npm install --legacy-peer-deps"] 
  
 [phases.build] 
-cmds = ["npm run build"] 
+cmds = ["echo 'Backend only mode'"] 

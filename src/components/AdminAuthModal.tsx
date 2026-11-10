@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { apiUrl } from '../utils/api';
 import { 
   Lock, 
   KeyRound, 
@@ -112,7 +113,7 @@ export const AdminAuthModal: React.FC<AdminAuthModalProps> = ({
     setLoading(true);
 
     try {
-      const response = await fetch((import.meta.env.VITE_API_URL || '') + '/api/admin/login', {
+      const response = await fetch(apiUrl('/api/admin/login'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ password }),
@@ -145,7 +146,7 @@ export const AdminAuthModal: React.FC<AdminAuthModalProps> = ({
     setLoading(true);
 
     try {
-      const response = await fetch((import.meta.env.VITE_API_URL || '') + '/api/admin/request-otp', {
+      const response = await fetch(apiUrl('/api/admin/request-otp'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
       });
@@ -186,7 +187,7 @@ export const AdminAuthModal: React.FC<AdminAuthModalProps> = ({
     setLoading(true);
 
     try {
-      const response = await fetch((import.meta.env.VITE_API_URL || '') + '/api/admin/verify-otp', {
+      const response = await fetch(apiUrl('/api/admin/verify-otp'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ code: otpCode }),
@@ -232,7 +233,7 @@ export const AdminAuthModal: React.FC<AdminAuthModalProps> = ({
     setLoading(true);
 
     try {
-      const response = await fetch((import.meta.env.VITE_API_URL || '') + '/api/admin/change-password', {
+      const response = await fetch(apiUrl('/api/admin/change-password'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -559,4 +560,3 @@ export const AdminAuthModal: React.FC<AdminAuthModalProps> = ({
     </div>
   );
 };
-

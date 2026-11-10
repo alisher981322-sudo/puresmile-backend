@@ -3,6 +3,7 @@ import {
   QrCode, Smartphone, RefreshCw, Power, CheckCircle2, AlertCircle,
   ShieldCheck, X, Laptop, BatteryCharging,
 } from 'lucide-react';
+import { apiUrl } from '../utils/api';
 
 interface ConnectedDeviceInfo {
   phone: string;
@@ -88,7 +89,7 @@ export const WhatsAppQrModal: React.FC<WhatsAppQrModalProps> = ({ isOpen, onClos
     const { waitMs = 0, silent = true } = opts;
     if (!silent) setLoading(true);
     try {
-      const res = await fetch(`/api/whatsapp/qr?wait_ms=${waitMs}`, { headers: authHeaders() });
+      const res = await fetch(apiUrl(`/api/whatsapp/qr?wait_ms=${waitMs}`), { headers: authHeaders() });
       if (res.status === 401 || res.status === 403) { setError('Session expired. Please log in again.'); return; }
       const json = await res.json().catch(() => null);
       if (!json) { setError('Invalid response.'); return; }
@@ -129,7 +130,7 @@ export const WhatsAppQrModal: React.FC<WhatsAppQrModalProps> = ({ isOpen, onClos
     if (!confirm('Are you sure you want to disconnect?')) return;
     setActionLoading(true); setError(null);
     try {
-      const res = await fetch((import.meta.env.VITE_API_URL || '') + '/api/whatsapp/disconnect', { method: 'POST', headers: authHeaders() });
+      const res = await fetch(apiUrl('/api/whatsapp/disconnect'), { method: 'POST', headers: authHeaders() });
       if (res.status === 401 || res.status === 403) { setError('Session expired.'); return; }
       const json = await res.json().catch(() => null);
       if (json?.success) {

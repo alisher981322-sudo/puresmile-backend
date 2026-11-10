@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { apiUrl } from '../utils/api';
 import { 
   ChevronLeft, 
   ChevronRight, 
@@ -194,15 +195,36 @@ export const ServicesCarousel: React.FC<ServicesCarouselProps> = ({ onSelectServ
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch((import.meta.env.VITE_API_URL || '') + '/api/services')
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
+    let isMounted = true;
+
+    async function loadServices() {
+      try {
+        const url = apiUrl('/api/services');
+        const res = await fetch(url);
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}`);
+        }
+        const contentType = res.headers.get('content-type') || '';
+        if (!contentType.includes('application/json')) {
+          console.warn('API returned non-JSON response (likely static fallback). Using default catalog.');
+          return;
+        }
+        const data = await res.json();
+        if (isMounted && data?.success && Array.isArray(data.data) && data.data.length > 0) {
           setServices(data.data);
         }
-      })
-      .catch(err => console.error('Carousel fetch error:', err))
-      .finally(() => setLoading(false));
+      } catch (err) {
+        console.warn('Could not load dynamic services, using built-in treatment catalog:', err);
+      } finally {
+        if (isMounted) setLoading(false);
+      }
+    }
+
+    loadServices();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const [activeIndex, setActiveIndex] = useState(0);
@@ -217,35 +239,38 @@ export const ServicesCarousel: React.FC<ServicesCarouselProps> = ({ onSelectServ
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Update active index once services are loaded
-  useEffect(() => {
-    if (services.length > 0) {
-      setActiveIndex(Math.floor(services.length / 2));
-    }
-  }, [services]);
-
   const isMobile = windowWidth < 640;
 
   const lastActionTime = useRef<number>(0);
   const touchStartX = useRef<number | null>(null);
   const touchStartY = useRef<number | null>(null);
 
-  // Map API services to carousel items with fallback assets
+  // Map API services to carousel items with guaranteed fallback to ALL_SERVICES
   const carouselItems = useMemo(() => {
+    if (!services || services.length === 0) {
+      return ALL_SERVICES;
+    }
     return services.map((s, idx) => {
       // Find matching hardcoded item for extra UI metadata (icons, colors)
-      const meta = ALL_SERVICES.find(item => item.title.toLowerCase().includes(s.name.toLowerCase())) || ALL_SERVICES[idx % ALL_SERVICES.length];
+      const meta = ALL_SERVICES.find(item => item.title.toLowerCase().includes((s.name || '').toLowerCase())) || ALL_SERVICES[idx % ALL_SERVICES.length];
       
       return {
         ...meta,
-        id: s.id.toString(),
-        title: s.name,
-        description: s.description,
-        priceEstimate: `$${s.price}`,
-        duration: s.duration_minutes
+        id: s.id?.toString() || meta.id,
+        title: s.name || meta.title,
+        description: s.description || meta.description,
+        priceEstimate: s.price ? `$${s.price}` : meta.priceEstimate,
+        duration: s.duration_minutes || (meta as any).duration
       };
     });
   }, [services]);
+
+  // Update active index once carousel items are ready
+  useEffect(() => {
+    if (carouselItems.length > 0) {
+      setActiveIndex(Math.floor(carouselItems.length / 2));
+    }
+  }, [carouselItems.length]);
 
   const handleNext = () => {
     const now = Date.now();
@@ -457,4 +482,3 @@ export const ServicesCarousel: React.FC<ServicesCarouselProps> = ({ onSelectServ
     </section>
   );
 };
-

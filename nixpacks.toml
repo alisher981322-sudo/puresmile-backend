@@ -1,6 +1,12 @@
-[phases.setup]  
-nvmVersion = "20"  
-[phases.install]  
-cmds = ["npm install --legacy-peer-deps"]  
-[phases.build]  
-cmds = ["npm run build"] 
+# Nixpacks configuration for Railway Node.js Full-Stack App
+[phases.setup]
+nixPkgs = ["nodejs_22"]
+
+[phases.install]
+cmds = ["npm install"]
+
+[phases.build]
+cmds = ["npm run build"]
+
+[start]
+cmd = "npm start"

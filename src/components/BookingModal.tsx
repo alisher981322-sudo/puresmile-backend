@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { X, Calendar, Clock, User, Phone, Mail, Sparkles, CheckCircle2, ChevronRight } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import { apiUrl } from '../utils/api';
 
 interface BookingModalProps {
   isOpen: boolean;
@@ -32,27 +33,63 @@ export const BookingModal: React.FC<BookingModalProps> = ({
   const [appointmentCode, setAppointmentCode] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [services, setServices] = useState<any[]>([]);
-  const [doctors, setDoctors] = useState<any[]>([]);
+  const DEFAULT_SERVICES = [
+    { id: 1, name: 'Teeth Cleaning & Scaling', price: 95 },
+    { id: 2, name: 'Tooth Fillings (Cavity Treatment)', price: 120 },
+    { id: 3, name: 'Root Canal Treatment (RCT)', price: 350 },
+    { id: 4, name: 'Tooth Extraction & Wisdom Removal', price: 150 },
+    { id: 5, name: 'Teeth Whitening (Bleaching)', price: 290 },
+    { id: 6, name: 'Cosmetic Veneers & Laminates', price: 800 },
+    { id: 7, name: 'Dental Implants & Titanium Restoration', price: 1200 },
+    { id: 8, name: 'Braces & Clear Aligners', price: 2400 },
+    { id: 9, name: 'Dental Crowns & Bridges', price: 450 },
+    { id: 10, name: 'Pediatric Dentistry & Child Oral Care', price: 80 },
+  ];
+
+  const DEFAULT_DOCTORS = [
+    { id: 1, name: 'Dr. Sarah Vance, DDS', specialty: 'Chief Prosthodontist' },
+    { id: 2, name: 'Dr. Michael Reynolds, DMD', specialty: 'Implant Surgeon' },
+    { id: 3, name: 'Dr. Aisha Patel, BDS', specialty: 'Aesthetic Orthodontics' },
+  ];
+
+  const [services, setServices] = useState<any[]>(DEFAULT_SERVICES);
+  const [doctors, setDoctors] = useState<any[]>(DEFAULT_DOCTORS);
 
   React.useEffect(() => {
     if (isOpen) {
       setSelectedService(initialService);
+      if (!selectedDoctor && DEFAULT_DOCTORS.length > 0) {
+        setSelectedDoctor(DEFAULT_DOCTORS[0].id);
+      }
       
-      fetch((import.meta.env.VITE_API_URL || '') + '/api/services')
-        .then(res => res.json())
-        .then(data => { if (data.success) setServices(data.data); })
-        .catch(err => console.error('Failed to fetch services:', err));
-
-      fetch((import.meta.env.VITE_API_URL || '') + '/api/doctors')
-        .then(res => res.json())
+      fetch(apiUrl('/api/services'))
+        .then(async res => {
+          if (!res.ok) return null;
+          const ct = res.headers.get('content-type') || '';
+          if (!ct.includes('application/json')) return null;
+          return res.json();
+        })
         .then(data => {
-          if (data.success && data.data.length > 0) {
+          if (data && data.success && Array.isArray(data.data) && data.data.length > 0) {
+            setServices(data.data);
+          }
+        })
+        .catch(err => console.warn('Services fetch notice:', err));
+
+      fetch(apiUrl('/api/doctors'))
+        .then(async res => {
+          if (!res.ok) return null;
+          const ct = res.headers.get('content-type') || '';
+          if (!ct.includes('application/json')) return null;
+          return res.json();
+        })
+        .then(data => {
+          if (data && data.success && Array.isArray(data.data) && data.data.length > 0) {
             setDoctors(data.data);
             setSelectedDoctor(data.data[0].id);
           }
         })
-        .catch(err => console.error('Failed to fetch doctors:', err));
+        .catch(err => console.warn('Doctors fetch notice:', err));
     }
   }, [initialService, isOpen]);
 
@@ -81,7 +118,7 @@ export const BookingModal: React.FC<BookingModalProps> = ({
 
       const fullPhone = `${code}${formattedNumber}`;
 
-      const response = await fetch((import.meta.env.VITE_API_URL || '') + '/api/appointments', {
+      const response = await fetch(apiUrl('/api/appointments'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -94,7 +131,11 @@ export const BookingModal: React.FC<BookingModalProps> = ({
         }),
       });
 
-      const data = await response.json();
+      let data: any = null;
+      const ct = response.headers.get('content-type') || '';
+      if (ct.includes('application/json')) {
+        data = await response.json();
+      }
       const codeId = data?.data?.id ? `PS-${data.data.id}` : 'PS-' + Math.floor(100000 + Math.random() * 900000);
       setAppointmentCode(codeId);
       setIsSuccess(true);

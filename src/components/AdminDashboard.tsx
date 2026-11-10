@@ -6,6 +6,7 @@ import {
   Activity, Check, Sparkles, AlertTriangle
 } from 'lucide-react';
 import { WhatsAppQrModal } from './WhatsAppQrModal';
+import { apiUrl } from '../utils/api';
 
 export type TabType = 'appointments' | 'patients' | 'services' | 'doctors' | 'inquiries' | 'audit_logs';
 export type AppointmentStatusFilter = 'ALL' | 'Pending' | 'Confirmed' | 'Completed' | 'Cancelled';
@@ -105,7 +106,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onOpenSecurityMo
         const headers: Record<string, string> = { 'Content-Type': 'application/json' };
         if (token) headers['Authorization'] = `Bearer ${token}`;
 
-        const res = await fetch((import.meta.env.VITE_API_URL || '') + '/api/whatsapp/status', { headers });
+        const res = await fetch(apiUrl('/api/whatsapp/status'), { headers });
         const json = await res.json();
         if (json.success && json.data?.sessionStatus) {
           setWhatsAppStatus(json.data.sessionStatus);
@@ -157,7 +158,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onOpenSecurityMo
         const headers: Record<string, string> = { 'Content-Type': 'application/json' };
         if (token) headers['Authorization'] = `Bearer ${token}`;
 
-        const response = await fetch(url, { headers });
+        const response = await fetch(apiUrl(url), { headers });
         const result = await response.json();
         
         if (reqId !== fetchCounter.current) return;
@@ -168,7 +169,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onOpenSecurityMo
           throw new Error(result.error || 'Failed to fetch audit logs');
         }
       } else {
-        const response = await fetch(`/api/${tab}`);
+        const response = await fetch(apiUrl(`/api/${tab}`));
         const result = await response.json();
         
         if (reqId !== fetchCounter.current) return;
@@ -204,7 +205,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onOpenSecurityMo
       const headers: Record<string, string> = { 'Content-Type': 'application/json' };
       if (token) headers['Authorization'] = `Bearer ${token}`;
 
-      const response = await fetch(`/api/appointments/${id}`, {
+      const response = await fetch(apiUrl(`/api/appointments/${id}`), {
         method: 'PUT',
         headers,
         body: JSON.stringify({ status: newStatus })
@@ -242,7 +243,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onOpenSecurityMo
   // Inquiry Status Toggle
   const updateInquiryStatus = async (id: number, newStatus: string) => {
     try {
-      const response = await fetch(`/api/inquiries/${id}`, {
+      const response = await fetch(apiUrl(`/api/inquiries/${id}`), {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: newStatus })
@@ -275,7 +276,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onOpenSecurityMo
     if (token) headers['Authorization'] = `Bearer ${token}`;
 
     try {
-      const response = await fetch(`/api/patients/${id}`, {
+      const response = await fetch(apiUrl(`/api/patients/${id}`), {
         method: 'PUT',
         headers,
         body: JSON.stringify({ medical_history: medicalHistoryInput }),
@@ -316,7 +317,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onOpenSecurityMo
     if (token) headers['Authorization'] = `Bearer ${token}`;
 
     try {
-      const response = await fetch(url, {
+      const response = await fetch(apiUrl(url), {
         method,
         headers,
         body: JSON.stringify(serviceFormData),
@@ -372,7 +373,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onOpenSecurityMo
 
     try {
       const url = type === 'service' ? `/api/services/${id}` : `/api/doctors/${id}`;
-      const response = await fetch(url, { method: 'DELETE', headers });
+      const response = await fetch(apiUrl(url), { method: 'DELETE', headers });
       const result = await response.json();
 
       if (response.status === 401 || response.status === 403) {
@@ -430,7 +431,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onOpenSecurityMo
     if (token) headers['Authorization'] = `Bearer ${token}`;
 
     try {
-      const response = await fetch(url, {
+      const response = await fetch(apiUrl(url), {
         method,
         headers,
         body: JSON.stringify(doctorFormData),
@@ -512,7 +513,7 @@ export const AdminDashboard: React.FC<AdminDashboardProps> = ({ onOpenSecurityMo
       const fullPhone = `${code}${formattedNumber}`;
       const payload = { ...checkinForm, patient_phone: fullPhone };
 
-      const response = await fetch((import.meta.env.VITE_API_URL || '') + '/api/admin/audit-logs/checkin', {
+      const response = await fetch(apiUrl('/api/admin/audit-logs/checkin'), {
         method: 'POST',
         headers,
         body: JSON.stringify(payload)

@@ -1,1 +1,1 @@
-web: npm start
+npm install --legacy-peer-deps 

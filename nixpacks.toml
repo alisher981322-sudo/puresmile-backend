@@ -1,2 +1,5 @@
 [phases.setup] 
 pkgs = ["nodejs_22"] 
+ 
+[phases.install] 
+cmds = ["npm install --include=optional --legacy-peer-deps"] 

@@ -2,4 +2,7 @@
 pkgs = ["nodejs_22"] 
  
 [phases.install] 
-cmds = ["npm install --include=optional --legacy-peer-deps"] 
+cmds = ["npm install --include=optional --legacy-peer-deps --force"] 
+ 
+[phases.build] 
+cmds = ["npm run build"] 
